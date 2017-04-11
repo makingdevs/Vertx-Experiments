@@ -1,11 +1,12 @@
 package com.makingdevs
 
-def options = [instances:2]
+def options = [instances:4]
 
 vertx.deployVerticle("com/makingdevs/ReaderVerticle.groovy")
 vertx.deployVerticle("com/makingdevs/ProcessorVerticle.groovy", options)
 vertx.deployVerticle("com/makingdevs/ClientWsCardVerticle.groovy", options)
 vertx.deployVerticle("com/makingdevs/StatusVerticle.groovy")
+vertx.deployVerticle("com/makingdevs/WsVerticle.groovy")
 
 def headers = [ headers: [
                           "path" : "/home/carlogilmar/Desktop/Github/medios-pago-maquila/"
