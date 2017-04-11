@@ -9,7 +9,6 @@ class MainVerticle extends AbstractVerticle {
 
   @Override
   void start(){
-    println "Iniciando deploy de init"
-    vertx.deployVerticle("src/main/groovy/com/makingdevs/init.groovy")
+    vertx.deployVerticle("src/main/groovy/com/makingdevs/InitVerticle.groovy")
   }
 }
