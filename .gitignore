@@ -1,0 +1,9 @@
+src/main/groovy/webroot/third-party
+.gradle/
+src/main/groovy/conf.json
+build/
+src/main/resources/webroot/third-party/
+.node-version
+.vertx/
+data/
+conf.json
