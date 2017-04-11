@@ -46,7 +46,8 @@ shadowJar {
 
 run {
   //args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange","--conf=${projectDir}/conf.json"]
-  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+  //args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+  args = ['run', mainVerticleName]
 }
 
 /*runShadow{
