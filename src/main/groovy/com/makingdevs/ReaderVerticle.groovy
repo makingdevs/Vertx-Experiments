@@ -1,11 +1,13 @@
 package com.makingdevs
-println "reader on"
+
 vertx.eventBus().consumer("com.makingdevs.reader"){ message ->
 
-	vertx.fileSystem().exists("/home/carlogilmar/Desktop/Github/medios-pago-maquila/file.txt", { result ->
+  def path = message.headers()["path"]
+
+	vertx.fileSystem().exists(path+"file.txt", { result ->
 		if (result.succeeded() && result.result()) {
 			vertx.eventBus().send("com.makingdevs.status", "El archivo existe!")
-			vertx.eventBus().send("com.makingdevs.processor", "/Users/makingdevs/maquila/file.txt")
+			vertx.eventBus().send("com.makingdevs.processor", path)
 		} else {
 			vertx.eventBus().send("com.makingdevs.status", "No existe el archivo")
 		}
@@ -15,6 +17,7 @@ vertx.eventBus().consumer("com.makingdevs.reader"){ message ->
 
 
 vertx.eventBus().consumer("com.makingdevs.move"){ message ->
-	vertx.fileSystem().move("/home/carlogilmar/Desktop/Github/medios-pago-maquila/file.txt","/home/carlogilmar/Desktop/Github/medios-pago-maquila/processed.txt", {})
+	vertx.fileSystem().move(message.body(), "${message.body()}processed.txt", {})
+  vertx.eventBus().send("com.makingdevs.status", "Cambiando nombre del archivo y moviendo de directorio.")
 }
 
