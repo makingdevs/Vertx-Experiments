@@ -47,6 +47,7 @@ vertx.eventBus().consumer("com.makingdevs.batch.card"){ message ->
   batchIds.put(batchId, batch)
 
   if( batch.count == batch.processed ){
+    println "counter : ${batch.count}"
     vertx.eventBus().send("com.makingdevs.monitor", "Batch finished: ${batchId}")
   }
 }
@@ -60,7 +61,12 @@ vertx.eventBus().consumer("com.makingdevs.monitor"){message ->
 
 vertx.eventBus().consumer("com.makingdevs.writer"){ message ->
   def cards = message.body()
-  def fileToWrite = cards.join("\n")
+  def cardsToSave = cards.unique()
+  println "----------------------------------------------"
+  println "Cards que llegan:"+cards.size
+  println "Cards unique"+cardsToSave.size
+  println "----------------------------------------------"
+  def fileToWrite = cardsToSave.join("\n")
 	vertx.fileSystem().writeFile("/home/carlogilmar/Desktop/Github/medios-pago-maquila/out.txt", Buffer.buffer(fileToWrite)){ result ->
 			if(result.succeeded()){
         vertx.eventBus().send("com.makingdevs.status", "Escritura del archivo de salida lista.")
