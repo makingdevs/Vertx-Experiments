@@ -37,18 +37,20 @@ vertx.eventBus().consumer("com.makingdevs.monitor"){message ->
 }
 
 vertx.eventBus().consumer("com.makingdevs.writer"){ message ->
+
   def cards = message.body()
-  def cardsToSave = cards.unique()
+  //def cardsToSave = cards.unique()
   println "----------------------------------------------"
   println "Cards que llegan:"+cards.size
-  println "Cards unique"+cardsToSave.size
+  //println "Cards unique"+cardsToSave.size
   println "----------------------------------------------"
-  def fileToWrite = cardsToSave.join("\n")
+  def fileToWrite = cards.join("\n")
+
 	vertx.fileSystem().writeFile("/home/carlogilmar/Desktop/Github/medios-pago-maquila/out.txt", Buffer.buffer(fileToWrite)){ result ->
 			if(result.succeeded()){
         vertx.eventBus().send("com.makingdevs.status", "Escritura del archivo de salida lista.")
  			}else{
-        vertx.eventBus().send("com.makingdevs.status", "Problmeas en escritura del archivo de salida.")
+        vertx.eventBus().send("com.makingdevs.status", "Problemas en escritura del archivo de salida.")
 			}
 	}
 }
