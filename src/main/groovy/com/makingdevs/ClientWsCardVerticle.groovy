@@ -15,7 +15,7 @@ vertx.eventBus().consumer("com.makingdevs.each.card"){ message ->
     if(r1.succeeded()){
 			def card = cardsIds.get(params.line)
 			cardsIds.put(params.line, card + [cvv1: r1.result().body()])
-			vertx.eventBus().send("com.makingdevs.card.coordinator", params)
+			//vertx.eventBus().send("com.makingdevs.card.coordinator", params)
 		}
     else{
 			vertx.eventBus().send("com.makingdevs.status", "Error al invocar llamada a webservice")
@@ -26,7 +26,7 @@ vertx.eventBus().consumer("com.makingdevs.each.card"){ message ->
     if(r2.succeeded()){
 			def card = cardsIds.get(params.line)
 			cardsIds.put(params.line, card + [cvv2: r2.result().body()])
-			vertx.eventBus().send("com.makingdevs.card.coordinator", params)
+			//vertx.eventBus().send("com.makingdevs.card.coordinator", params)
 		}else{
 			vertx.eventBus().send("com.makingdevs.status", "Error al invocar llamada a webservice")
     }
@@ -51,6 +51,7 @@ vertx.eventBus().consumer("com.makingdevs.card.coordinator"){ message ->
 	def card = cardsIds.get(params.line)
 
 	if(card.every { k, v -> v != null }){
+    println "coordinator ok"
 		def cvv = card.collect { k,v -> v }
 		vertx.eventBus().send("com.makingdevs.batch.card", params + [cvv: cvv])
 	}
