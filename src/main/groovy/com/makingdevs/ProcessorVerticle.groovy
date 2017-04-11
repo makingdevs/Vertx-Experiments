@@ -47,7 +47,7 @@ vertx.eventBus().consumer("com.makingdevs.batch.card"){ message ->
   batchIds.put(batchId, batch)
 
   if( batch.count == batch.processed ){
-    println "counter : ${batch.count}"
+    println "Counter size: ${batch.count}"
     vertx.eventBus().send("com.makingdevs.monitor", "Batch finished: ${batchId}")
   }
 }
@@ -55,6 +55,7 @@ vertx.eventBus().consumer("com.makingdevs.batch.card"){ message ->
 
 vertx.eventBus().consumer("com.makingdevs.monitor"){message ->
   def cardsFinished = cardsProcessed.get("batchProcess")
+  println "Monitor size: ${cardsFinished.size}"
   vertx.eventBus().send("com.makingdevs.writer", cardsFinished)
   vertx.eventBus().send("com.makingdevs.status", "${message.body()} with ${cardsFinished.size} cards")
 }
