@@ -1,6 +1,6 @@
 package com.makingdevs
 
-def options = [instances:1]
+def options = [instances:2]
 
 vertx.deployVerticle("com/makingdevs/ReaderVerticle.groovy")
 vertx.deployVerticle("com/makingdevs/ProcessorVerticle.groovy", options)
