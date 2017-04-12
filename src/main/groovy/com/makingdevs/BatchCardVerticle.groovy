@@ -20,7 +20,6 @@ vertx.eventBus().consumer("com.makingdevs.batch.card"){ message ->
 	vertx.eventBus().send("com.makingdevs.status", cardReady)
 	batch.processed = batch.processed + 1
   batchIds.put(batchId, batch)
-  println "Counter size wrong: ${batch.count}"
 
   if( batch.count == batch.processed ){
     println "Counter size: ${batch.count}"
