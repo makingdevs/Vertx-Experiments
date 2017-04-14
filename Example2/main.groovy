@@ -1,4 +1,4 @@
-def options = [instances:2]
+def options = [instances:5]
 
 println "Main verticle deployed"
 vertx.deployVerticle("reader.groovy", options)
