@@ -1,0 +1,2 @@
+vertx.deployVerticle("main.groovy")
+
