@@ -1,4 +1,5 @@
 println "Main verticle deployed"
+vertx.deployVerticle("webserver.groovy")
 vertx.deployVerticle("webService.groovy", [instances:20])
 vertx.deployVerticle("clientCard.groovy", [instances:5])
 vertx.deployVerticle("processor.groovy")
