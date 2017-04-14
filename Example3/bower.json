@@ -1,0 +1,22 @@
+{
+  "name": "carlogilmar",
+  "authors": [
+    "carlogilmar <carlogilmar12@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "vertx3-eventbus-client": "^3.4.1",
+    "sockjs-client": "^1.1.2"
+  }
+}
