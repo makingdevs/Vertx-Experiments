@@ -1,4 +1,5 @@
 println "[ok] Procesor"
+
 vertx.eventBus().consumer("com.makingdevs.processor"){ message ->
         vertx.fileSystem().readFile("${message.body()}/file.txt"){ result ->
                 if (result.succeeded()) {

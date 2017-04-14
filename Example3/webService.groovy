@@ -3,7 +3,7 @@ Integer counter = 0
 
 vertx.eventBus().consumer("com.makingdevs.ws"){ message ->
     def verticleId = UUID.randomUUID().toString()
-    println "[${counter}] [${verticleId}] Web Service verticle"
+    vertx.eventBus().send("com.makingdevs.status", "[${counter}] [id ws:${verticleId}] Web Service verticle")
     counter++
 
     def line = message.body()
