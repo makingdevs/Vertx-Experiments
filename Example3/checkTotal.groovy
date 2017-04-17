@@ -9,10 +9,11 @@ Integer counter= 0
 vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
   counter++
   def total = map.get("totalCards")
-  if((total*2) == counter ){
+  List cards = map.get("cards")
+  println "${counter} Checking ... ${cards.size}"
+  if((total*2) == cards.size ){
     println ">------->"*5
     println "Finished ${counter} elements (Y)"
-    List cards = map.get("cards")
     println "Cards to write: ${cards.size}"
     def fileToWrite = cards.join("\n")
 
