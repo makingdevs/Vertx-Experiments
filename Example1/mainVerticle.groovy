@@ -1,4 +1,6 @@
-vertx.deployVerticle("secondVerticle.groovy", [instances:10, worker:true])
-vertx.deployVerticle("thirdVerticle.groovy", [instances:1])
-vertx.deployVerticle("statusVerticle.groovy", [instances:1])
-vertx.deployVerticle("firstVerticle.groovy",  [instances:1])
+println "[ok] Main Verticle: Deploy de verticles"
+vertx.deployVerticle("ReceiverVerticle.groovy", [instances:6])
+vertx.deployVerticle("MonitorVerticle.groovy")
+vertx.deployVerticle("statusVerticle.groovy")
+vertx.deployVerticle("GetListVerticle.groovy")
+vertx.deployVerticle("Sending.groovy")

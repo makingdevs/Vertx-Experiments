@@ -5,4 +5,6 @@ def lista = ["carlogilmar", "josejuan", "jorgeacosta", "gamalielJimenez", "brand
 map.put("items", lista)
 map.put("itemsToFill", [])
 
-vertx.eventBus().publish("com.makingdevs.get.lista", lista)
+vertx.eventBus().send("com.makingdevs.get.list", lista)
+
+
