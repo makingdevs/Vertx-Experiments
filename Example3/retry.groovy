@@ -1,4 +1,5 @@
 println "[ok] Retry verticle"
+def map = vertx.sharedData().getLocalMap("cardsReady")
 
 vertx.eventBus().consumer("com.makingdevs.retry.ws1"){ message ->
   def params = message.body()
@@ -12,9 +13,12 @@ vertx.eventBus().consumer("com.makingdevs.retry.ws1"){ message ->
         if(reply.succeeded()){
           vertx.eventBus().send("com.makingdevs.status", "<ws1> <retry> ${params.line} <${reply.result().body()}>")
           vertx.eventBus().send("com.makingdevs.undeploy", res.result)
+          def cards = map.get("cards")
+          map.put("cards", cards+"<ws1> ${params.line} <${reply.result().body()}>")
+          vertx.eventBus().send("com.makingdevs.check.total", "retrying")
         }
         else{
-          vertx.eventBus().send("com.makingdevs.status", "Web service1 para ${body.line} sin respuesta, reintentando... de nuevo")
+          vertx.eventBus().send("com.makingdevs.status", "Web service1 para ${params.line} sin respuesta, reintentando... de nuevo")
           vertx.eventBus().send("com.makingdevs.retry.ws1", [verticle: res.result, line: params.line])
         }
       }
@@ -37,9 +41,12 @@ vertx.eventBus().consumer("com.makingdevs.retry.ws2"){ message ->
         if(reply.succeeded()){
           vertx.eventBus().send("com.makingdevs.status", "<ws2> <retry> ${params.line} <${reply.result().body()}>")
           vertx.eventBus().send("com.makingdevs.undeploy", res.result)
+          def cards = map.get("cards")
+          map.put("cards", cards+"<ws2> ${params.line} <${reply.result().body()}>")
+          vertx.eventBus().send("com.makingdevs.check.total", "retrying")
         }
         else{
-          vertx.eventBus().send("com.makingdevs.status", "Web service2 para ${body.line} sin respuesta, reintentando... de nuevo")
+          vertx.eventBus().send("com.makingdevs.status", "Web service2 para ${params.line} sin respuesta, reintentando... de nuevo")
           vertx.eventBus().send("com.makingdevs.retry.ws2", [verticle: res.result, line: params.line])
         }
       }

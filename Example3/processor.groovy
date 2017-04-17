@@ -1,12 +1,16 @@
 println "[ok] Procesor"
 
+def map = vertx.sharedData().getLocalMap("cardsReady")
+
 vertx.eventBus().consumer("com.makingdevs.processor"){ message ->
         vertx.fileSystem().readFile("${message.body()}/file.txt"){ result ->
                 if (result.succeeded()) {
                         //vertx.eventBus().send("com.makingdevs.move", message.body())
 
-                        def lines = result.result().toString().split('\n')
-                        vertx.eventBus().send("com.makingdevs.status", "Procesor Verticle: Iniciando lectura y proceso *************" )
+                        List lines = result.result().toString().split("\n")
+                        vertx.eventBus().send("com.makingdevs.status", "${lines.size} Procesor Verticle: Iniciando lectura y proceso *************" )
+                        map.put("cards", [])
+                        map.put("totalCards", lines.size)
 
                         lines.eachWithIndex { line, idx ->
                             vertx.eventBus().send("com.makingdevs.each.card", [line:line, index:idx])
