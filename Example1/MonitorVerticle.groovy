@@ -5,10 +5,19 @@ println "[ok] Monitor Verticle"
 
 vertx.eventBus().consumer("com.makingdevs.monitor"){message ->
   def items = map.get("items")
-  def itemsToBeFilled = message.body()
-  println "Monitor Verticle: ${message.body()}"
-  
-  if(itemsToBeFilled == items.size){
+  def itemsToBeFilled = map.get("itemsToFill")
+  println "Monitor here!"
+  println items.size
+  println itemsToBeFilled.size
+
+  /*
+  println "Monitor Verticle Checking ..."
+  println "-----------------------------"
+  println itemsToBeFilled
+  println "-----------------------------"
+  */
+
+  if(itemsToBeFilled.size == items.size){
     vertx.eventBus.send("com.makingdevs.status", "Tenemos todos los items procesados-------------------")
   }
 
