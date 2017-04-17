@@ -11,7 +11,8 @@ vertx.eventBus().consumer("com.makingdevs.processor"){ message ->
                         vertx.eventBus().send("com.makingdevs.status", "Procesor Verticle: Iniciando lectura y proceso****************************************************************************************************" )
 
                         lines.eachWithIndex { line, idx ->
-                            vertx.eventBus().send("com.makingdevs.each.card", line)
+                            vertx.eventBus().send("com.makingdevs.each.card", [line:line, index:idx])
+                            vertx.eventBus().send("com.makingdevs.status", "Processor line :: ${idx}")
                         }
 
                 }
