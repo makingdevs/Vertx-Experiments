@@ -18,7 +18,7 @@ vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
 
   println " * <${counter}> Check Verticle. Cards Processed:<${cards.size}>, flags: <${flagsIdx.size}> decrease counter flag ${flags}"
 
-  if((total*2) == cards.size ){
+  if(total == cards.size ){
     println ">------->"*5
     println "Finished ${counter} elements (Y)"
     println "Cards to write: ${cards.size}"

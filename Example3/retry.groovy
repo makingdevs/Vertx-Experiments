@@ -13,13 +13,13 @@ vertx.eventBus().consumer("com.makingdevs.retry.ws1"){ message ->
           def cards = map.get("cards")
           def flags = map.get("flags")
           map.put("flags", flags-1)
-          map.put("cards", cards+"<ws1> ${params.line} <${reply.result().body()}>")
+          map.put("cards", cards+"<${params.index}> ${params.line} <${reply.result().body()}>")
           vertx.eventBus().send("com.makingdevs.check.total", params.index)
           vertx.eventBus().send("com.makingdevs.undeploy", res.result)
-          vertx.eventBus().send("com.makingdevs.status", "<ws1> <retry> flag ${flags-1} ")
+          vertx.eventBus().send("com.makingdevs.status", "<ws1> <retry> <line ${params.index}> flag ${flags-1} ")
         }
         else{
-          vertx.eventBus().send("com.makingdevs.status", "Web service1 sin respuesta, reintentando... de nuevo")
+          vertx.eventBus().send("com.makingdevs.status", "Web service1 sin respuesta, reintentando... de nuevo [${params.index}}]]")
           vertx.eventBus().send("com.makingdevs.retry.ws1", [verticle: res.result, line: params.line, index: params.index])
         }
       }
