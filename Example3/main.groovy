@@ -8,10 +8,15 @@ vertx.deployVerticle("retry.groovy")
 vertx.deployVerticle("checkTotal.groovy")
 vertx.deployVerticle("clientCard.groovy", [instances:2])
 vertx.deployVerticle("processor.groovy")
-vertx.deployVerticle("reader.groovy")
 vertx.deployVerticle("status.groovy")
-vertx.deployVerticle("init.groovy")
-
+vertx.deployVerticle("reader.groovy"){deploy->
+    if(deploy.succeeded()){
+        vertx.deployVerticle("init.groovy")
+    }
+    else{
+        println "Reader Verticle cannot deploy"
+    }
+}
 
 def service = ShellService.create(vertx, [
   telnetOptions:[

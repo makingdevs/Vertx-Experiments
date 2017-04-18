@@ -1,4 +1,4 @@
-import io.vertx.groovy.core.buffer.Buffer
+import io.vertx.core.buffer.Buffer as Buffer
 
 def map = vertx.sharedData().getLocalMap("cardsReady")
 
