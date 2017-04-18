@@ -14,8 +14,9 @@ vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
 
   def total = map.get("totalCards")
   List cards = map.get("cards")
+  def flags = map.get("flags")
 
-  println " * <${counter}> Check Verticle. Cards Processed:<${cards.size}>, flags: <${flagsIdx.size}>"
+  println " * <${counter}> Check Verticle. Cards Processed:<${cards.size}>, flags: <${flagsIdx.size}> decrease counter flag ${flags}"
 
   if((total*2) == cards.size ){
     println ">------->"*5

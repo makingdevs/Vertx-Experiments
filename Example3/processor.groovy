@@ -11,6 +11,7 @@ vertx.eventBus().consumer("com.makingdevs.processor"){ message ->
                         vertx.eventBus().send("com.makingdevs.status", "${lines.size} Procesor Verticle: Iniciando lectura y proceso *************" )
                         map.put("cards", [])
                         map.put("totalCards", lines.size)
+                        map.put("flags", (lines.size)*2)
 
                         lines.eachWithIndex { line, idx ->
                             vertx.eventBus().send("com.makingdevs.each.card", [line:line, index:idx])
