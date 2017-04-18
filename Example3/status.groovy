@@ -17,11 +17,11 @@ vertx.eventBus().consumer("com.makingdevs.status.ws"){ message ->
 vertx.eventBus().consumer("com.makingdevs.undeploy"){ message ->
   vertx.undeploy( message.body()){ res ->
     if(res.succeeded){
-      println "${undeployCounter} >--> Undeploying verticle [done]"
+      println "*** Undeploying verticle #[${undeployCounter}] [done] ***"
       undeployCounter++
     }
     else{
-      println ">--> Undeploying verticle [fail]"
+      println "*** Undeploying verticle [fail] ***"
     }
   }
 }

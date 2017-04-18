@@ -6,7 +6,7 @@ println "Main verticle deployed"
 //vertx.deployVerticle("webService.groovy", [instances:1])
 vertx.deployVerticle("retry.groovy")
 vertx.deployVerticle("checkTotal.groovy")
-vertx.deployVerticle("clientCard.groovy", [instances:2])
+vertx.deployVerticle("clientCard.groovy", [instances:1])
 vertx.deployVerticle("processor.groovy")
 vertx.deployVerticle("status.groovy")
 vertx.deployVerticle("reader.groovy"){deploy->
