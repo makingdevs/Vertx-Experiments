@@ -2,7 +2,7 @@ println "[ok] Status"
 Integer undeployCounter = 1
 
 vertx.eventBus().consumer("com.makingdevs.status"){ message ->
-  println "Status Verticle: ${new Date().toLocaleString()}: ${message.body()}"
+  println "${new Date().toLocaleString()}: ${message.body()}"
   //vertx.eventBus().send("com.makingdevs.web.monitor","Status Verticle: ${new Date().toLocaleString()} -- ${message.body()} ")
 }
 
