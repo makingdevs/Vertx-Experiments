@@ -8,19 +8,12 @@ def service = MetricsService.create(vertx)
                 vertx.eventBus().publish("metrics", metrics)
                 })
 
-// Send some messages
-def random = new java.util.Random()
-    vertx.eventBus().consumer("whatever", { msg ->
-              vertx.setTimer(10 + random.nextInt(50), { id ->
-                          vertx.eventBus().send("whatever", "hello")
-                            })
-              })
-vertx.eventBus().send("whatever", "hello")
-
 vertx.eventBus().consumer("metrics"){ message ->
-    println "Metrics here"
-    def m = message.body()
-    println m.dump()
+    def metrics = message.body()
+    println """
+        Metrics:
+        Messages send: ${metrics['messages.sent'].count}
+    """
 }
 
 
