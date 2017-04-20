@@ -8,7 +8,9 @@
 
 # Send a message
 
-> bus-send metrics "give me metrics"
+> bus-send com.makingdevs.monitor "give me metrics"
+
+
 
 
 

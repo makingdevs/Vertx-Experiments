@@ -14,12 +14,6 @@ vertx.eventBus().consumer("com.makingdevs.monitor"){message ->
 
 vertx.eventBus().consumer("metrics"){ message ->
     def metrics = message.body()
-    println """
-    Metrics:
-        Messages send: ${metrics['messages.sent'].count}
-        Messages reply failures: ${metrics['messages.reply-failures'].count}
-        Messages pending: ${metrics['messages.pending'].count}
-        Messages received: ${metrics['messages.received'].count}
-  """
+    println " Metrics: \n Messages send: ${metrics['messages.sent'].count} \n Messages reply failures: ${metrics['messages.reply-failures'].count} \n Messages pending: ${metrics['messages.pending'].count} \n Messages received: ${metrics['messages.received'].count}"
 }
 
