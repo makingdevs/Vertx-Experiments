@@ -1,4 +1,5 @@
 import io.vertx.ext.shell.ShellService
+import io.vertx.ext.dropwizard.MetricsService
 
 println "Main verticle deployed"
 
@@ -17,10 +18,24 @@ vertx.deployVerticle("reader.groovy"){deploy->
     }
 }
 
-def service = ShellService.create(vertx, [
+def shell = ShellService.create(vertx, [
   telnetOptions:[
     host:"localhost",
     port:3000
     ]
   ])
-service.start()
+shell.start()
+
+def service = MetricsService.create(vertx)
+    vertx.setPeriodic(1000, { t ->
+              def metrics = service.getMetricsSnapshot(vertx.eventBus())
+                vertx.eventBus().publish("metrics", metrics)
+                })
+
+vertx.eventBus().consumer("metrics"){ message ->
+    def metrics = message.body()
+        println "*-*-"*10
+    println "Messages delivered:  "+metrics["messages.sent"]
+}
+
+
