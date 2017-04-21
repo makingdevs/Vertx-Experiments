@@ -1,9 +1,9 @@
-maquila/src/main/groovy/webroot/third-party
-maquila/.gradle/
-maquila/src/main/groovy/conf.json
-maquila/build/
-maquila/src/main/resources/webroot/third-party/
+verticles-process-file/src/main/groovy/webroot/third-party
+verticles-process-file/.gradle/
+verticles-process-file/src/main/groovy/conf.json
+verticles-process-file/build/
+verticles-process-file/src/main/resources/webroot/third-party/
 .node-version
-maquila/.vertx/
-maquila/data/
-maquila/conf.json
+verticles-process-file/.vertx/
+verticles-process-file/data/
+verticles-process-file/conf.json
