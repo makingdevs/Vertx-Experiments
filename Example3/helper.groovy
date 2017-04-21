@@ -11,7 +11,7 @@ def service = MetricsService.create(vertx)
 vertx.eventBus().consumer("com.makingdevs.get.metrics"){message ->
   println "Shell request monitoring"
   def metrics = service.getMetricsSnapshot(vertx.eventBus())
-  vertx.eventBus().publish("metrics", metrics)
+  vertx.eventBus().publish("com.makingdevs.metrics", metrics)
 }
 
 vertx.eventBus().consumer("com.makingdevs.metrics"){ message ->

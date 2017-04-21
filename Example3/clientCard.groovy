@@ -15,7 +15,7 @@ vertx.eventBus().consumer("com.makingdevs.client.card"){ message ->
           else{
             vertx.eventBus().send("com.makingdevs.status", "Web service1 no responde. Reintentado [ok] [${body.index}]")
             vertx.eventBus().send("com.makingdevs.undeploy", res.result)
-            vertx.eventBus().send("com.makingdevs.each.card", [line: body.line, index:body.index])
+            vertx.eventBus().send("com.makingdevs.client.card", [line: body.line, index:body.index])
           }
         }
       }
@@ -33,6 +33,6 @@ vertx.eventBus().consumer("com.makingdevs.persistor"){ message ->
 
     vertx.eventBus().send("com.makingdevs.check.total", params.index)
     vertx.eventBus().send("com.makingdevs.undeploy", params.verticle)
-    vertx.eventBus().send("com.makingdevs.status", "<ws1> [done] [counter:${flags-1}] [line: ${params.index}")
+    vertx.eventBus().send("com.makingdevs.status", "<ws1> [done] [line: ${params.index}")
 
 }
