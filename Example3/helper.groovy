@@ -17,11 +17,15 @@ vertx.eventBus().consumer("com.makingdevs.get.metrics"){message ->
 vertx.eventBus().consumer("com.makingdevs.metrics"){ message ->
     def metrics = message.body()
     println """
-    Metrics: 
+    ==========================Event bus Metrics ============================
     Messages send: ${metrics['messages.sent'].count} 
     Messages reply failures: ${metrics['messages.reply-failures'].count} 
     Messages pending: ${metrics['messages.pending'].count} 
     Messages received: ${metrics['messages.received'].count}
+    Messages delivered: ${metrics['messages.delivered'].count}
+    ========================== Vertx Metrics ===============================
+    Verticles Deployed com.makingdevs.ws ${metrics['vertx.verticles']}
+
     """
 }
 

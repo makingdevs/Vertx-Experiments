@@ -2,7 +2,7 @@ println "Main verticle deployed"
 
 vertx.deployVerticle("helper.groovy")
 vertx.deployVerticle("checkTotal.groovy")
-vertx.deployVerticle("clientCard.groovy")
+vertx.deployVerticle("clientCard.groovy", [instances:1])
 vertx.deployVerticle("processor.groovy")
 vertx.deployVerticle("status.groovy")
 vertx.deployVerticle("monitor.groovy")

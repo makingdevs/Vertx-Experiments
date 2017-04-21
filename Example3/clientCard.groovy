@@ -33,6 +33,6 @@ vertx.eventBus().consumer("com.makingdevs.persistor"){ message ->
 
     vertx.eventBus().send("com.makingdevs.check.total", params.index)
     vertx.eventBus().send("com.makingdevs.undeploy", params.verticle)
-    vertx.eventBus().send("com.makingdevs.status", "<ws1> [done] [line: ${params.index}")
+    //vertx.eventBus().send("com.makingdevs.status", "<ws1> [done] [line: ${params.index}")
 
 }
