@@ -10,7 +10,7 @@
 
 Please check the follow instructions:
 
-Open many vertx shell 
+Open many vertx shell
 
 > telnet localhost 3000
 
@@ -22,3 +22,9 @@ And use for the following verticles:
 Send a simple message with:
 
 > bus-sent com...
+
+# Change the path to your files in...
+
+> checkTotal.groovy
+
+> main.groovy
