@@ -1,9 +1,8 @@
-Integer counter = 0
-println "[ok] Webservice"
+println "[ok] Webservice verticle"
 
 vertx.eventBus().consumer("com.makingdevs.ws"){ message ->
-    counter++
-    def line = message.body()
-    Thread.sleep(new Random().nextInt(1000))
-    message.reply(line.hashCode().abs())
+    def timerID = vertx.setTimer(new Random().nextInt(1000)) { id ->
+        def line = message.body()
+        message.reply(line.hashCode().abs())
+    }
 }

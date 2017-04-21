@@ -1,8 +1,9 @@
 import io.vertx.core.buffer.Buffer as Buffer
 
 def map = vertx.sharedData().getLocalMap("cardsReady")
-println "[ok] Check total verticle"
 Integer counter= 0
+
+println "[ok] Check total verticle"
 
 vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
 
@@ -10,14 +11,13 @@ vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
 
   def total = map.get("totalCards")
   List cards = map.get("cards")
-  def flags = map.get("flags")
-
-  println " * Somebody wants to check... [counter:${counter}] [Cards Processed:<${cards.size}>] [flag: ${flags}]"
 
   if(total == cards.size ){
-    println ">------->"*5
-    println "Finished ${counter} elements (Y)"
-    println "Cards to write: ${cards.size}"
+    println ">>>>-----------> [Last index: ${message.body()}]"*5
+    println "Check Total Counter: ${counter} times"
+    println "Share Map [totalCards]: ${cards.size}"
+    println "Total cards: ${total}"
+
     def fileToWrite = cards.line.join("\n")
 
     vertx.fileSystem().writeFile("/home/carlogilmar/Desktop/out.txt", Buffer.buffer(fileToWrite)){ result ->
@@ -29,3 +29,5 @@ vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
     }
   }
 }
+
+
