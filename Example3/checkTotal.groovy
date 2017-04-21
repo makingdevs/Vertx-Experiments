@@ -10,6 +10,7 @@ vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
   counter++
 
   def total = map.get("totalCards")
+  def initTime = map.get("initTime")
   List cards = map.get("cards")
 
   if(total == cards.size ){
@@ -17,10 +18,12 @@ vertx.eventBus().consumer("com.makingdevs.check.total"){message ->
     println "Check Total Counter: ${counter} times"
     println "Share Map [totalCards]: ${cards.size}"
     println "Total cards: ${total}"
+    println "The process begin at ${initTime}"
+    println "The process finally at ${new Date().toLocaleString()}"
 
     def fileToWrite = cards.line.join("\n")
 
-    vertx.fileSystem().writeFile("/home/carlogilmar/Desktop/out.txt", Buffer.buffer(fileToWrite)){ result ->
+    vertx.fileSystem().writeFile("/Users/makingdevs/Desktop/out.txt", Buffer.buffer(fileToWrite)){ result ->
       if(result.succeeded()){
         vertx.eventBus().send("com.makingdevs.status", "Escritura del archivo de salida lista con ${cards.size} registros")
       }else{
