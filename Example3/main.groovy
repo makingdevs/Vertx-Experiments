@@ -10,7 +10,7 @@ vertx.deployVerticle("monitor.groovy")
 vertx.deployVerticle("reader.groovy"){deploy->
     if(deploy.succeeded()){
         println "[ok] Init Verticle... Sending signal to reader verticle for start the process"
-        def headers = [ headers: ["path" : "/home/carlogilmar/Desktop"]]
+        def headers = [ headers: ["path" : "/Users/makingdevs/Desktop"]]
         vertx.eventBus().send("com.makingdevs.reader", "Leyendo fichero de texto.", headers)
     }
     else{

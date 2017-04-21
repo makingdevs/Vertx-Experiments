@@ -1,4 +1,4 @@
-println "[ok] Client card"
+//println "[ok] Client card"
 def map = vertx.sharedData().getLocalMap("cardsReady")
 
 vertx.eventBus().consumer("com.makingdevs.client.card"){ message ->
@@ -22,7 +22,7 @@ vertx.eventBus().consumer("com.makingdevs.client.card"){ message ->
           }
         }
       }
-      else{ println "---Webservice 1 deployment fail---"}
+      //else{ println "---Webservice 1 deployment fail---"}
     }
 
   }
