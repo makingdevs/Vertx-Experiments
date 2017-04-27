@@ -7,3 +7,6 @@ verticles-process-file/src/main/resources/webroot/third-party/
 verticles-process-file/.vertx/
 verticles-process-file/data/
 verticles-process-file/conf.json
+Example5-log4j2/.gradle/
+Example5-log4j2/build/
+Example5-Log4j2/propertieslogs.log
