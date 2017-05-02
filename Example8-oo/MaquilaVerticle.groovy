@@ -1,3 +1,5 @@
+import io.vertx.core.json.JsonArray
+
 def map = vertx.sharedData().getLocalMap("maquila")
 
 //Simulating Db responses
@@ -35,11 +37,10 @@ vertx.eventBus().consumer("com.makingdevs.database.get.cards"){message ->
 //Starter
 vertx.eventBus().consumer("com.makingdevs.starter.process"){message ->
   println "Iniciando proceso"
-  vertx.eventBus().send("com.makingdevs.database.get.instructions", ""){replySimulator->
-    if(replySimulator.succeeded()){
-      println "1) Obteniendo lista de instrucciones, y procesandolas"
-      map.put("instructions", [])
-      vertx.eventBus().send("com.makingdevs.get.instructions", replySimulator.result.body())
+  vertx.eventBus().send("com.makingdevs.database.get.instructions", ""){replyDatabase->
+    if(replyDatabase.succeeded()){
+      println "1) Obteniendo lista de instrucciones, y enviandolas para generar objetos"
+      vertx.eventBus().send("com.makingdevs.get.instructions", replyDatabase.result.body())
     }
   }
 }
@@ -47,20 +48,36 @@ vertx.eventBus().consumer("com.makingdevs.starter.process"){message ->
 vertx.eventBus().consumer("com.makingdevs.get.instructions"){message ->
   def instructionsInfo = message.body()
   println "2) Obteniendo objetos"
-  instructionsInfo.each{ instruction ->
-    def instructionsList = map.get("instructions")
+
+  def instructionIdList = []
+  def instructionJsonList = instructionsInfo.collect{ instruction ->
     Instruction i = new Instruction(spareId:instruction.id, requestTotal:instruction.total, fileName: instruction.fileName)
-    map.put("instructions", instructionsList + i)
+    instructionIdList << i.id
+    i.toJson()
   }
-  vertx.eventBus().send("com.makingdevs.process.instructions", "finished")
+
+  map.put("instructions", instructionJsonList)
+
+  vertx.eventBus().send("com.makingdevs.process.instructions", instructionIdList)
 
 }
 
 
 vertx.eventBus().consumer("com.makingdevs.process.instructions"){message ->
-  def instructionsObj = map.get("instructions")
+
+  def idList = message.body()
+  def jsonList = map.get("instructions")
   println "+ + +"*20
-  println "todas las instructions fueron convertidas en objectos"
+  println "Hay en el shareMap ${jsonList.size}"
+  jsonList.each{i ->
+    println i.dump()
+  }
+
+  /*
+  Instruction instruction = InstructionService.toInstruction(jsonList[0])
+  println "--------- o ---------"*5
+  println instruction.dump()
+*/
 
 }
 
