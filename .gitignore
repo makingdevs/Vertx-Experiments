@@ -10,3 +10,4 @@ verticles-process-file/conf.json
 Example5-log4j2/.gradle/
 Example5-log4j2/build/
 Example5-Log4j2/propertieslogs.log
+Example9-Webserver/webroot/third-party/
