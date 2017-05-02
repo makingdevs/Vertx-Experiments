@@ -15,6 +15,15 @@ vertx.deployVerticle("verticle1.groovy"){deploy ->
   }
 }
 
+vertx.deployVerticle("verticleA.groovy"){deploy ->
+  if(deploy.succeeded()){
+    println "Vertcile a  arriba."
+    vertx.eventBus().send("com.makingdevs.v.a", "Starting... verticles")
+  }
+}
+
+
+
 vertx.eventBus().consumer("com.makingdevs.undeploy"){ message ->
   vertx.undeploy( message.body()){ res ->
     if(res.succeeded){
