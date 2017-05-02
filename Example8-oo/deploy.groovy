@@ -4,8 +4,6 @@ import io.vertx.ext.shell.ShellService
 def shell = ShellService.create(vertx, [telnetOptions:[ host:"localhost", port:3000]])
 shell.start()
 
-//vertx.deployVerticle("Exampler.groovy")
-
 vertx.deployVerticle("MaquilaVerticle.groovy"){deploy ->
   if(deploy.succeeded){
     println "Maquila verticle ok"

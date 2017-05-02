@@ -1,4 +1,5 @@
-import io.vertx.core.json.JsonArray
+import io.vertx.core.json.JsonObject
+import io.vertx.core.json.Json
 
 def map = vertx.sharedData().getLocalMap("maquila")
 
@@ -50,12 +51,15 @@ vertx.eventBus().consumer("com.makingdevs.get.instructions"){message ->
   println "2) Obteniendo objetos"
 
   def instructionIdList = []
-  def instructionJsonList = instructionsInfo.collect{ instruction ->
+  List<JsonObject> instructionJsonList = instructionsInfo.collect{ instruction ->
+
     Instruction i = new Instruction(spareId:instruction.id, requestTotal:instruction.total, fileName: instruction.fileName)
     instructionIdList << i.id
-    i.toJson()
+    //i.toJson()
+    new JsonObject(Json.encode(i))
   }
 
+  println instructionJsonList[0].getClass().simpleName
   map.put("instructions", instructionJsonList)
 
   vertx.eventBus().send("com.makingdevs.process.instructions", instructionIdList)
@@ -69,15 +73,11 @@ vertx.eventBus().consumer("com.makingdevs.process.instructions"){message ->
   def jsonList = map.get("instructions")
   println "+ + +"*20
   println "Hay en el shareMap ${jsonList.size}"
-  jsonList.each{i ->
-    println i.dump()
-  }
+  println jsonList[0].getClass().simpleName
 
-  /*
-  Instruction instruction = InstructionService.toInstruction(jsonList[0])
+  Instruction instruction = InstructionService.fromJson(jsonList[0])
   println "--------- o ---------"*5
   println instruction.dump()
-*/
 
 }
 
