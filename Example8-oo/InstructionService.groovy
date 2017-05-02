@@ -2,9 +2,9 @@ import io.vertx.core.json.JsonObject
 
 class InstructionService {
 
-  static Instruction toInstruction(JsonObject json){
+  static Instruction fromJson(def json){
    new Instruction(
-                    id: json.getString("id"),
+                    id: json.id,
                     fileName: "procesada"
                   )
   }
