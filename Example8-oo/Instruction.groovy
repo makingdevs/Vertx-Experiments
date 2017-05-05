@@ -11,17 +11,6 @@ class Instruction {
   Integer requestTotal
   String fileName
 
-  def toMap(){
-    [
-      id:id,
-      dateCreated: dateCreated,
-      lastUpdate: lastUpdate,
-      status: status,
-      spareId: spareId,
-      products: products
-    ]
-  }
-
   JsonObject toJson(){
     new JsonObject(
       id:id,
@@ -32,5 +21,9 @@ class Instruction {
       requestTotal: requestTotal,
       fileName: fileName
     )
+  }
+
+  def toInstruction(JsonObject json){
+    InstructionService.fromJson(json)
   }
 }

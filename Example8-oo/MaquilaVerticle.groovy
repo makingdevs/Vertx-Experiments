@@ -47,6 +47,8 @@ vertx.eventBus().consumer("com.makingdevs.starter.process"){message ->
 }
 
 vertx.eventBus().consumer("com.makingdevs.get.instructions"){message ->
+
+
   def instructionsInfo = message.body()
   println "2) Obteniendo objetos"
 
@@ -55,29 +57,28 @@ vertx.eventBus().consumer("com.makingdevs.get.instructions"){message ->
 
     Instruction i = new Instruction(spareId:instruction.id, requestTotal:instruction.total, fileName: instruction.fileName)
     instructionIdList << i.id
-    //i.toJson()
-    new JsonObject(Json.encode(i))
+    i.toJson()
   }
 
-  println instructionJsonList[0].getClass().simpleName
   map.put("instructions", instructionJsonList)
-
-  vertx.eventBus().send("com.makingdevs.process.instructions", instructionIdList)
+  vertx.eventBus().send("com.makingdevs.process.instructions", instructionJsonList[0])
 
 }
 
-
 vertx.eventBus().consumer("com.makingdevs.process.instructions"){message ->
 
-  def idList = message.body()
+  JsonObject firstElement = message.body()
   def jsonList = map.get("instructions")
   println "+ + +"*20
   println "Hay en el shareMap ${jsonList.size}"
-  println jsonList[0].getClass().simpleName
+  println firstElement.getClass().simpleName
 
-  Instruction instruction = InstructionService.fromJson(jsonList[0])
-  println "--------- o ---------"*5
-  println instruction.dump()
+
+  //println jsonList[0].getClass().simpleName
+
+  //Instruction instruction = InstructionService.fromJson(jsonList[0])
+  //println "--------- o ---------"*5
+  //println instruction.dump()
 
 }
 
